@@ -1,0 +1,15 @@
+/**
+\example paratest.cpp
+Demonstrates general usage of the library (widgets, callbacks, ...)
+*/
+
+/**
+\example dblbuffer.cpp
+A demo application using "doublebuffering". It also shows hot to use ParaGUI
+without the built-in eventloop (using a custom one). 
+*/
+
+/**
+\example sigc.cpp
+Demonstrates multiple inheritance of SigC::Object classes
+*/

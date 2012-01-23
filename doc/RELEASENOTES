@@ -1,0 +1,509 @@
+---------------------------------
+ParaGUI unstable development tree
+BEWARE! MAY CONTAIN NUTS
+---------------------------------
+
+----------------------
+ROADMAP LEADING TO 1.2
+----------------------
+
+1.1.5 - signals handled by libsigc++
+1.1.6 - API cleanup (all binary incompatible changes allowed)
+1.1.7 - Performance tuning / more API cleanups
+1.1.8 - unify constructors (e.g.: PG_Widget(PG_Widget* parent, const PG_Rect& rect))
+        needed for factory. merge object factory from paragui2.
+1.1.9 - redesign of event-handling. unify all widget constructors 
+1.1.10 - bug fixing and API reality check
+1.1.11 - merge and rework XML layoutloader
+1.1.12 - bug fixing and API freeze
+1.1.? - i'll consult my magic orb
+
+If you want to take part in the development process - drop me a few lines or
+take a look into "TODO".
+
+
+----------------------------
+Whats new in ParaGUI 1.1.8 ?
+----------------------------
+
+- added PG_Factory (yeah)
+- started PG_MessageObject cleanup (move code to PG_Application)
+- added GetTitlebarHeight() / SetTitlebarHeight to PG_Window
+- renamed SetColorTitlebar to SetTitlebarColor
+- marked PG_MessageBox::WaitForClick obsolete
+- new RunModal() / SetModalStatus(int) methods
+- PG_ScrollArea::ScrollToWidget(..) now honours area-bounds
+- removed "using namespace std;" from header files
+- removed "using namespace std;" from all sources
+- removed Get / SetApplicationPath from PG_Application
+- only fade-in invisible widgets 
+- bumped version to 1.1.8
+- fixed "flickering" of hidden widgets
+- fixed infinite loops in PG_MultiLineEdit
+- added PG_Button::SetIconIndent(Uint16)
+- fixed non-unicode rendering of german "umlaut"
+- fixed alignment of text (PG_Button)
+- removed PG_TimerID. Please use PG_TimeObject::ID now
+- fixed detection of libSDL_image*.so for Debian
+
+- applied patches from Sebastian:
+- made PG_Application::RunEventLoop() virtual to make subclassing easier
+- made PG_Application::my_quitEventLoop protected to make subclassing easier
+- made PG_LineEdit signals available to PG_DropDown
+- made PG_DropDown::handleButtonClick() virtual to make subclassing easier
+- made PG_MessageBox::handleButton() virtual to make subclassing easier
+- made PG_RadioButton::handleButtonClick() virtual to make subclassing easier
+- removed PG_Rect::PG_Rect() and added default params to PG_Rect::PG_Rect(x,y,w,h) instead
+- made PG_Scrollbar::handleButtonClick virtual to make subclassing easier
+- divided PG_ScrollWidget::IDWIDGETLIST_SCROLL into IDWIDGETLIST_VSCROLL and IDWIDGETLIST_HSCROLL
+- made PG_SpinnerBox::handleButtonClick() virtual to make subclassing easier
+- made PG_SpinnerBox::handleEditEnd() virtual to make subclassing easier
+- added PG_Window::GetTitlebarColor()
+- made PG_Window::handleButtonClick() virtual to make subclassing easier
+- fixed some compilation errors with VC.NET occurred due to missing namespace access
+- reworked PG_Button::SetSizeByText()
+- reworked PG_Label::SetSizeByText()
+- reworked PG_Button::SetSizeByText()
+- reworked PG_RadioButton::SetSizeByText()
+- made PG_RichEdit::CompleteLines() call CheckForScrollBars() only if my_AutoVerticalResize is false
+- added mouse wheel support for PG_RadioButton
+- reset PG_RichEdit's scrollarea height to 0 when adding new text
+- added SetSizeByText() example to paratest.cpp
+- a bit of cleanup
+- added some small doc fixes
+- added signals to PG_MessageObject
+- added PG_LogConsole::SetMaxLogLines()
+- PG_RichEdit: replaced SetAutoVerticalResize() with SetAutoResize(bool bHorizontal = true, bool bVertical = true)
+- PG_RichEdit: changed tabSize parameter to Uint16
+- PG_RichEdit: fixed infinite loop bug which occured when a word was too big to be displayed in a row
+- PG_RichEdit: improved an algorithm by adding a 'break'
+- PG_RichEdit: added SetLineWidth()
+- PG_ScrollWidget: added SetShiftOnRemove(), GetScrollPosX() and GetScrollPosY()
+- added PG_Window::SetMovable()
+- made PG_Widget::eventMouseLeave() call its parent's eventMouseLeave() only if cursor actually leaves parent area too
+- PG_SpinnerBox: removed some virtual modifiers to fix a potential crash
+- theme_priv.h: added some namespace std references to make VC happy
+- removed some unnecessary code
+- made PG_ScrollArea::DeleteAll call area change signals
+- added some doc updates
+- PG_Image: may choose drawing mode now
+- PG_LineEdit: made SetCursorPos() virtual for easier subclassing (-> e. g.
+  PG_MultiLineEdit)
+- PG_RadioButton: added GetFirstOfGroup() and GetNextOfGroup()
+- PG_RichEdit: fixed resizing
+- PG_ScrollArea:
+    * added method to have parent widget resized automatically 
+      (SetResizeParent(bool bRemove, bool bAdd))
+    * moved bounds checking from ScrollToWidget() to ScrollTo()
+      - PG_ScrollWidget:
+    * added SetAutoResize(bool bRemove, bool bAdd)
+    * made it update its scrollbars properly when calling ScrollToWidget()
+- PG_DropDown: resize automatically by default
+- PG_Widget:
+    * added param 'bRecursive' to SetFontColor()
+    * added EnableReceiver(bool enable, bool bRecursive)
+- paraconfig_win32.h: renamed macro UNICODE_ENABLED to ENABLE_UNICODE
+- disabled warning flood for VC++ 7.1 concerning YChar's exception implementation
+- added DECLSPEC to YChar's and YString's class declarations
+- added a fix from Jeremie (concerning an END key bug) for his PG_MultiLineEdit (thanks Jeremie!)
+- fixes for PG_MultiLineEdit (it no longer crashes)
+- added PG_DropDown::GetFirstInList()
+
+- applied patches from Ulf Lorenz:
+- commented PG_Draw::DrawTile
+- commented PG_Draw::DrawGradient
+- PG_Rect: simplified some if-clauses
+- surface.cpp: tiny check added, another one removed
+- surface.cpp: preserved clip rect
+- PG_Widget::FadeOut: lock screen-surface before blitting
+- PG_Widget::RestoreBackground: properly restore screen-cliprect
+- PG_Widget::eventBlit: proper screen locking
+- PG_Widget::Draw[H|V]Line: proper screen locking
+- PG_Widget: some small comments, removed an obsolete function
+- PG_Button::eventMouseLeave: fixed a critical bug where you could untoggle a button by clicking
+  on it, moving the mouse away and releasing the mouse which would
+  untoggle the button but not release a click event.
+- PG_Button::SetBorderSize: fixed a small bug where one bordersize would be set for all three cases
+- PG_Button::eventBlit: screen is now locked
+  removed some obsolete lines of code, added comments
+
+- applied patches from Fred Ollinger:
+- many many documentation updates
+- added widget-screenshots
+- new beginners-tutorial
+
+- applied the great unicode patch from Mohammed Yousif <mhdyousif@gmx.net>
+
+
+----------------------------
+Whats new in ParaGUI 1.1.7 ?
+----------------------------
+
+- optimized (software)cursor drawing
+- removed obsoleted PG_Widget::[Move|Size]Window methods
+- added custom itemheight to PG_DropDown::AddItem()
+- dynamic resizing of listbox height in PG_DropDown
+- disabled alpha for application background
+- optimized PG_RectList
+- added docs
+- major rewrite of PG_WidgetList (new class PG_ScrollArea)
+- fixed many widget child-handling bugs
+- the new design should simply do it *right*
+- removed obsolete PG_WidgetListEx class
+- reworked nearly all class constructors
+- splitted PG_WidgetList in PG_ScrollWidget / PG_WidgetList
+- PG_RichEdit is now inherited from PG_ScrollWidget
+- PG_ScrollBar / PG_Slider cleanup
+- removed obsolete PG_MessageObject::WaitEvent()
+- removed obsolete PG_MessageObject::objectList (use widgetlist instead)
+- moved PG_MessageObject::TranslateNumPadKeys to PG_Application
+- removed GlMode stuff
+- moved PG_Application stuff from PG_MessageObject
+- applied patches from Sebastian:
+  made AddWidget() / AddItem() obsolete (see roadmap for more info)
+  added param 'bool bRecursive' to PG_Widget::SetTransparency (set to false by default)
+  added PG_Button::SetTransparency(Uint8 t, bool bRecursive) to work properly
+  when a parent widget sets transparency recursively
+  improved graphical update of software cursor a bit by minimizing rect to be updated
+  merged multiple calls to SDL_UpdateRects to improve performance 
+  (see SDL reference for more info)
+  added PG_DropDown::GetIndent()
+  added PG_Label::GetIndent()
+  added PG_ListBox::GetIndent()
+  fixed PG_ListBox::GetSelectedItems() (sorry, my fault :))
+  fixed: sometimes PG_ListBox items were drawn although parent was not visible
+  removed unnecessary BringToFront() in PG_DropDown::handleButtonClick()
+  improved graphical update in PG_ListBox::SelectItem()
+  added 24 bpp support for fonts (thanks to Steve McCrea!)
+  fixed paratest.cpp VC.NET warnings
+  made some changes to paratest.cpp to make use of PG_Button::SetTransparency()
+  and the new way of adding items to lists
+  made some minor cleanups
+  fixed VC complaint concerning PG_Application::GetScreen()
+  added PG_ListBox::SetAlignment() / GetAlignment()
+  added PG_DropDown::SetAlignment() / GetAlignment()
+  added PG_Window::GetIcon()
+  modified PG_Application::SetCaption() to use ParaGUI's SetIcon() insteadof SDL's
+  fixed a potential crash occuring when having only one widget in a PG_RectList
+  made PG_ListBox / PG_DropDown::SetIndent() work before adding items
+  added a simple mouse wheel handling for PG_ListBox and PG_DropDown
+  made PG_Widget's destructor call RemoveFromWidgetList() only if widget has no parent
+  added "break"s to PG_Window::handleButtonClick()
+  connected a slider's sigSlideEnd signal in paratest.cpp
+  made use of new SetAlignment() method in paratest.cpp
+- applied patches from Ulf Lorenz
+  documented pgsurfacecache.h
+  remove obsolete code from drawline.cpp
+
+
+----------------------------
+Whats new in ParaGUI 1.1.6 ?
+----------------------------
+
+- new PG_Color class unifying SDL_Color/Uint32/R,G,B
+- added signal "sigTimer" to PG_TimerObject
+- added new PG_Point class
+- cleanup of PG_Button SetIcon, SetIcon2
+- moved PG_CURSORMODE stuff to PG_Application
+- moved KeyEvent Actions to PG_Widget
+- obsoleted paragui_types.h
+- move PG_TA_xxx to PG_Label::TextAlign
+- removed all the SWIG crap (need to find a better way)
+- moved WF_WINDOWFLAGS into PG_Window class
+- moved PG_SB_xxx flags to PG_ScrollBar::ScrollDirection
+- fixed SigC::Object clashes for multiple class inheritances
+  (inspired by Ulf)
+- moved constant widget id's into the corresponding classes
+- moved PG_OPEN_MODE into PG_FileArchive (now Mode)
+- fixed potential glitch in PG_SurfaceCache::Add(...)
+- applied patches from Ulf Lorenz:
+  added a few comments to pgapplication.h
+  removed obsolete function calls from pgapplication.cpp
+  added param comment for PG_Application::RedrawBackground()
+  documented PG_Application::PrintVideoTest()
+  in PG_Application::Shutdown calling DeleteBackground() for freeing
+  PG_Application::DeleteBackground(): setting my_background to 0
+  commented PG_Application::SetBulkMode()
+  PG_LogConsole::LogVa(): removed useless function call
+  PG_LogConsole::Done():  function now deletes PG_LogWindow
+  added comments to pglog.h
+- applied patches from "H. C." :))
+  Win32 support. Requires VisualC.NET or GCC
+  commented new background modes
+  updated layout loader to handle new background modes
+  changing the background results in redrawing the screen properly
+  fixed disabling background
+  PG_Draw::CreateRGBSurface() will check for invalid surface first before doing 
+  any work on it
+  replaced some Redraw()s with Update()s
+  disabling PG_LineEdit removes edit cursor
+  fixed handling keys like '@' in PG_LineEdit
+  PG_PopupMenu::trackMenu() takes care of exceeding the screen's height
+  removed unnecessary Show() in PG_PopupMenu::trackMenu()
+  removed unnecessary my_has_gradient assignment in PG_ThemeWidget
+  fixed PG_ThemeWidget::SetBackground(SDL_Surface*, ...)
+  bring a PG_Window only to front if it isn't yet (removes an unnecessarycall to Show())
+  added proper mouse wheel handling to PG_Sliders in paratest.cpp
+- major performance improvements after "cachegrinding"
+- more coming up
+
+
+----------------------------
+Whats new in ParaGUI 1.1.5 ?
+----------------------------
+
+- the version. ok it's the 1.0.4 tree with some binary incompatible
+  changes. -> 1.1.5
+- new background mode 9TILE
+- no more SendMessage (ok. there are still 1 or 2)
+  using libsigc++ instead.
+- new sigXXX signal handlers
+- dynamic loading of SDL_image
+- performance improvements for complex layouts
+- silent mode development
+
+
+----------------------------
+Whats new in ParaGUI 1.0.4 ?
+----------------------------
+
+- fixed a stupid PG_Window bug (buttons not shown correctly)
+- made std:: the default workspace -> removed all std:: prefixes
+- fixed a bug in showing "hidden" child widgets
+- fixed a clipping bug in PG_ColumnItem
+- Win32 (VC++) build fixes for physfs
+- GNU build fixes (test dir), "make distcheck" passes now
+- PG_Widget::SetSizeByText changes (Thanks H.C. <sebh@gmx.de>)
+- added PG_RadioButton::SetFontColor methods (Thanks H.C. <sebh@gmx.de>)
+- fixed PG_WidgetList::Remove(All) methods
+  (Thanks Ivan Stankovic <pokemon@fly.srk.fer.hr>)
+- new DevC++ workspaces (DevC++ >= 4.9.7.0)
+- fixed a bug in PG_MessageObject::PumpIntoEventQueue(..)
+  MOUSEMOTIONEVENT don't need to be passed to ALL objects
+- added a method to PG_Application to clear and delete the background 
+  (void DeleteBackground()) (Thanks H.C. <sebh@gmx.de>)
+- fixed a potential memory leak in PG_Application resulting from changing
+  non-scaled backgrounds (Thanks H.C. <sebh@gmx.de>)
+- added a method to PG_RichEdit to set the default alignment (void
+  SetAutoVerticalResize(...)) (Thanks H.C. <sebh@gmx.de>)
+- added a method to PG_RichEdit to activate / deactivate auto vertical
+  resize (void SetAlignment(...)) (Thanks H.C. <sebh@gmx.de>)
+- SetIcon(const char* filename), SetIcon(SDL_Surface* icon) for 
+  PG_Window's title bar (H.C. <sebh@gmx.de>)
+- another wrapper function for PG_Widget::my_internaldata->quitmodal
+  which allows one to set it to false (H.C. <sebh@gmx.de>)
+- removed unnecessary Redraw() call in PG_RadioButton::SetText(...)
+  (H.C. <sebh@gmx.de>)
+- fixed a bug in the message-pump caused by objects be deleted and
+  still having pending messages for it. (Thanks Michael Bartl)
+- Added new fonts. Now using the open Bitstream Vera fonts.
+- convert theme images automatically to screen format (may break things)
+- added new PG_FileArchive::LoadSurface method with an option to
+  specify the surface colorkey (Thanks Keith)
+- added PG_Application::FlushEventQueue method
+- merged patch from Steffen Blume <abszisse@web.de>
+  Select[First,Next,Prev]Item for PG_DropDown
+- fixed several bug in PG_WidgetList
+  Thanks Alexander Opitz <opitz@primacom.net>
+- fixed the layoutloader (child widgets are now shown properly)
+- fixed a bug in the PG_Application::GetWidget template
+- fixed userdata handling in PG_Widget
+  Thanks Mark Junker <mjscod@gmx.de>
+
+----------------------------
+Whats new in ParaGUI 1.0.3 ?
+----------------------------
+
+- made PhysFS optional (like expat)
+- autoconf / automake fixes
+- fixed a problem in the destructor of PG_TimerObject
+- added Ruby bindings
+- added support for DevC++
+- fixed wrong linebreaks in PG_RichEdit
+- added overloaded functions for PG_Application::GetWidget<WidgetType>
+- fixed autoconf macro to build nicely on Midori
+
+----------------------------
+Whats new in ParaGUI 1.0.2 ?
+----------------------------
+
+- Fixed a bug in DrawLineH, DrawLineV
+  introduced in 1.0.1
+- updated PhysFS to version 0.1.5
+- removed unneccessary mutex locks while
+  message processing
+- fixed a crash in PG_ListBox when deleting an
+  item in the event handler
+- fixed Show()/Hide() on child widgets
+- added functions returning vectors of strings instead of
+  char** to PG_FileArchive
+  Thanks Andrew Ford <andrewhford@yahoo.com>
+- added PG_TimerObject
+- added a switch to disable dirty widget updates
+  globally (PG_Application::DisableDirtyUpdates(bool))
+- GCC 3.1 compilation fixes 
+  Thanks Guillaume Cottenceau <gc@mandrakesoft.com>
+- added functions to add callback handlers to existing menu items
+  Thanks John Rainey <John.Rainey@symmetron.com>
+- added missing DECLSPEC to pgwidgetlistex.h
+  Thanks Andrew Ford <andrewhford@yahoo.com>
+- added CodeWarrior and MacOS support
+  Thanks Keith Swyer <ksswyer@adventus.com>
+- added wildcard matching for PG_FileArchive::GetFileList
+- added PG_FileArchive::OpenFileRWops
+- added PG_RadioButton:SetAlignment
+- missing DECLSPEC added to pgfont.h
+- added surface locking for direct pixel access rendering
+  (text, gradient).
+- added new messagetype to process XML layout tags
+  from the <head> section (MSG_XMLTAG).
+- fixed a clipping bug in PG_Widget::Hide() with simple backgrounds
+
+
+----------------------------
+Whats new in ParaGUI 1.0.1 ?
+----------------------------
+
+- Fixed permissions on zipped theme files
+- 8bit surface fixes
+- Enabling/Disabling of symlinks
+- fixed a potential crash in PG_ListBox (SelectItem(NULL))
+- PG_Button: Added Get/SetBlendLevel() functions
+- SetBackground colorkey fixes
+- Borland C++ Builder fixes
+- remerge of expat (optional)
+- optimized DrawHLine, DrawVLine
+- fixed a widgetlist scrolling bug
+- fixed a window-resize bug
+- cached surfaces are generated in the screen format
+
+
+--------------------------------------
+Whats new in ParaGUI 1.0 RC1 (Beta3) ?
+--------------------------------------
+
+Bug fixes, bug fixes, ... :))
+Cleaned up the font interface.
+Some performance tweaks (see PG_Widget::SetDirtyUpdate()).
+added PG_DataContainer to hold binary data.
+added Python support (./configure --enable-python, refer to
+the docs for a detailed description of the configuration
+options )
+
+
+--------------------------------------
+Whats new in ParaGUI 1.0 RC0 (Beta2) ?
+--------------------------------------
+
+The really last thing i had to change was the internal
+structure of the library.
+The whole arrangement was also quite a mess.
+
+Now the lib is separated into these main parts:
+
+draw - all drawing and surface stuff
+fonts - font handling and rendering
+core - basic things like message handling, app class, ...
+themes - the theme loader
+widgets - all widget classes
+
+I also cleaned up the header files.
+Now there are only headers in the include dir that are
+needed by client applications.
+
+pgdrawobject.h has been removed - use pgdraw.h
+
+There are also some compatiblity macros in pgdraw.h that
+allow usage of some old style functions. e.g.:
+
+#define PG_DrawLine PG_Draw::DrawLine
+
+
+
+--------------------------------
+Whats new in ParaGUI 1.0 Beta1 ?
+--------------------------------
+
+The widget system in the prior versions was quite a mess.
+Now i decided to clean up the whole system and make it
+more *defined*.
+
+Due to this there are some changes in widget creation.
+The following rules apply:
+
+Now there are 2 basic widget types:
+
+PG_Widget:
+An unthemed widget that can have an internal drawing surface
+or not.
+
+PG_ThemeWidget:
+A themed widget (loads it's style from the theme definition)
+that can have an internal drawing surface or not.
+
+
+Widgets with drawing surfaces:
+-----------------------------
+
+The  content is drawn into the surface and blitted to the
+screen.
+
+Construction with internal surface:
+PG_Widget(PG_Widget* parent, const PG_Rect& rect, true);
+PG_ThemeWidget(PG_Widget* parent, const PG_Rect& rect, true);
+
+The param "true" indicates the creation of the drawing surfaces.
+
+Redrawing & Blitting:
+
+Redraw(bool doUpdate);
+This function redraws the widget (by calling eventDraw()).
+And calls Update(true) if doUpdate = true.
+
+Update(bool doBlit);
+This calls Blit() and updates the screen.
+
+Blit();
+This function blits the widget surface to the screen and
+calls eventBlit() that can be used for custom blit behaviour.
+
+
+
+Widget without drawing surfaces:
+--------------------------------
+
+The content of the widget is directly blitted to the screen.
+
+Construction:
+PG_Widget(PG_Widget* parent, const PG_Rect& rect);
+PG_ThemeWidget(PG_Widget* parent, const PG_Rect& rect);
+
+Blitting:
+
+Update(bool doBlit);
+This calls Blit() and updates the screen.
+
+Blit();
+This function blits the widget content directly to the
+screen by calling eventBlit().
+
+
+I hope this clarifies the widget behaviour stuff.
+Please contact me if you have further suggestions and
+additions.
+
+For backward compatibility the *old* widgettypes
+(PG_GradientWidget, PG_StaticFrame) still can be used but
+I definitely wouldn't suggest this. Please try to port your
+application to the new widgetclasses.
+
+Porting should be quite easy by replacing PG_GradientWidget,
+PG_StaticFrame with PG_ThemeWidget.
+
+
+I hope this clarifies the widget behaviour stuff.
+Please contact me if you have further suggestions and
+additions.
+
+Alexander Pipelka
+pipelka@teleweb.at

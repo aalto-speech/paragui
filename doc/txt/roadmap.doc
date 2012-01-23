@@ -1,0 +1,13 @@
+/**
+
+\page	roadmap		The current roadmap (TODO's and plans)
+
+\section roadmap_sect1 Development roadmap
+
+\include RELEASENOTES
+
+\section roadmap_sect2 Outstanding issues
+
+\include TODO
+
+*/

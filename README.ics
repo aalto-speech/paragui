@@ -1,0 +1,3 @@
+Compilation for online-demo:
+./configure --enable-internalphysfs --enable-static=yes --enable-shared=no
+make
