@@ -20,9 +20,9 @@
     pipelka@teleweb.at
  
     Last Update:      $Author: senarvi $
-    Update Date:      $Date: 2012/04/26 21:42:26 $
+    Update Date:      $Date: 2012/04/27 18:24:51 $
     Source File:      $Source: /share/puhe/cvsroot/paragui/src/core/pgmessageobject.cpp,v $
-    CVS/RCS Revision: $Revision: 1.1 $
+    CVS/RCS Revision: $Revision: 1.2 $
     Status:           $State: Exp $
 */
 

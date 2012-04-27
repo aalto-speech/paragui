@@ -20,9 +20,9 @@
     pipelka@teleweb.at
  
     Last Update:      $Author: senarvi $
-    Update Date:      $Date: 2012/04/26 21:42:26 $
+    Update Date:      $Date: 2012/04/27 18:24:51 $
     Source File:      $Source: /share/puhe/cvsroot/paragui/src/core/pgfilearchive.cpp,v $
-    CVS/RCS Revision: $Revision: 1.1 $
+    CVS/RCS Revision: $Revision: 1.2 $
     Status:           $State: Exp $
 */
 
@@ -35,7 +35,6 @@
 #include "SDL_loadso.h"
 #include "physfsrwops.h"
 #include <iostream>
-#include <cstring>
 #include "paragui.h"
 
 Uint32 PG_FileArchive::my_instance_count = 0;
@@ -45,22 +44,22 @@ static void* SDL_image_obj = NULL;
 typedef SDL_Surface* (*IMG_Load_RW_FT)(SDL_RWops* src, int freesrc);
 static IMG_Load_RW_FT IMG_Load_RW_FUNC = NULL;
 
-PG_FileArchive::PG_FileArchive(const char * argv0) {
+PG_FileArchive::PG_FileArchive() {
 
 	// increment instance count
 	my_instance_count++;
 
 	// First instance ? -> initialize PhysFS
 	if(my_instance_count == 1) {
-		if(PHYSFS_init(argv0) == 0) {
-			std::cerr << "PHYSFS_init(" << argv0 << ") failed: " << PHYSFS_getLastError() << std::endl;
+		if(PHYSFS_init("paragui") == 0) {
+			std::cerr << "Unable to initialize PhysicsFS !" << std::endl;
 			return;
 		}
 
 		// try different names to find SDL_image
 		SDL_image_obj = SDL_LoadObject(SDLIMAGE_LIB);
 		if(SDL_image_obj == NULL) {
-			PG_LogWRN("SDL_image not found! Only bmp images can be loaded!");
+			PG_LogMSG("SDL_image not found! Only bmp images can be loaded!");
 		}
 		else {
 			IMG_Load_RW_FUNC = (IMG_Load_RW_FT)SDL_LoadFunction(SDL_image_obj, "IMG_Load_RW");
@@ -100,13 +99,8 @@ std::string *PG_FileArchive::PathToPlatform(const char *path) {
 	std::string *newpath;
 	const char* sep = GetDirSeparator();
 	std::string::size_type pos = 0, incr;
-	if (path == NULL) {
-		newpath = new std::string();
-	}
-	else {
-		newpath = new std::string(path);
-	}
-	incr = std::strlen(sep);
+	newpath = new std::string(path);
+	incr = strlen(sep);
 	if(incr == 1 && sep[0] == '/')
 		return newpath;
 
@@ -316,19 +310,20 @@ SDL_Surface* PG_FileArchive::LoadSurface(const char* filename, bool usekey, Uint
 
 	if(IMG_Load_RW_FUNC != NULL) {
 		surface = IMG_Load_RW_FUNC(rw, 1);
-		if (surface == NULL) {
-			PG_LogERR("PhysFS reported: '%s'", PG_FileArchive::GetLastError());
-			PG_LogERR("Failed to load image from '%s' !", filename);
-			return NULL;
-		}
 	}
 	else {
 		surface = SDL_LoadBMP_RW(rw, 1);
-		if (surface == NULL) {
-			PG_LogERR("SDL reported: '%s'", SDL_GetError());
-			PG_LogERR("Failed to load image from '%s' !", filename);
-			return NULL;
-		}
+	}
+
+	if(surface == NULL) {
+		PG_LogWRN("Failed to load imagedata from '%s' !", filename);
+		return NULL;
+	}
+	
+	if(surface == NULL) {
+		PG_LogERR("Unable to load imagedata from '%s'", filename);
+		PG_LogERR("PhysFS reported: '%s'", PG_FileArchive::GetLastError());
+		PG_LogERR("SDL reported: '%s'", SDL_GetError());
 	}
 
 	if(usekey == true) {

@@ -2,7 +2,7 @@
 /* include/paraconfig_gnu.h.in.  Generated from configure.in by autoheader.  */
 
 /* Define to 1 if Unicode support is enabled. */
-#define ENABLE_UNICODE 
+/* #undef ENABLE_UNICODE */
 
 /* Define if exceptions are enabled */
 /* #undef EXCEPTIONS_ENABLED */
@@ -17,7 +17,7 @@
 #define HAVE_FNMATCH 1
 
 /* Define to 1 if you have the <hash_map> header file. */
-/* #undef HAVE_HASH_MAP */
+#define HAVE_HASH_MAP 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1

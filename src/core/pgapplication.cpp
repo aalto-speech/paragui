@@ -20,9 +20,9 @@
     pipelka@teleweb.at
  
     Last Update:      $Author: senarvi $
-    Update Date:      $Date: 2012/04/26 21:42:26 $
+    Update Date:      $Date: 2012/04/27 18:24:51 $
     Source File:      $Source: /share/puhe/cvsroot/paragui/src/core/pgapplication.cpp,v $
-    CVS/RCS Revision: $Revision: 1.1 $
+    CVS/RCS Revision: $Revision: 1.2 $
     Status:           $State: Exp $
 */
 
@@ -81,9 +81,8 @@ void PARAGUI_ShutDownCode() {
 }
 
 
-PG_Application::PG_Application(const char * argv0) :
-	PG_FileArchive(argv0)
-{
+PG_Application::PG_Application() {
+
 	// set UTF8 encoding if UNICODE support is enabled
 	// we use the "C" locale because it's hard to get the current locale setting
 	// in a portableway (Win32 doesn't support nl_langinfo).
