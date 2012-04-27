@@ -1,3 +1,8 @@
 Compilation for online-demo:
+
+aclocal && libtoolize && automake && autoconf
+cd src/physfs
+aclocal && libtoolize && automake && autoconf
+cd ../..
 ./configure --enable-internalphysfs --enable-static=yes --enable-shared=no
 make
