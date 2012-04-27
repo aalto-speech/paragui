@@ -59,7 +59,7 @@ dist-hook:
 	mkdir $(distdir)/lib
 	cp $(srcdir)/lib/README.txt $(distdir)/lib
 
-install-hook:
+install-exec-hook:
 	-ldconfig
 
 rpm: $(PACKAGE)-$(VERSION).tar.gz
