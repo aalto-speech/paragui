@@ -1,0 +1,122 @@
+/* config.h.in.  Generated from configure.in by autoheader.  */
+
+/* define if debug build is enabled */
+#undef DEBUG
+
+/* define if debug chatter is enabled */
+#undef DEBUG_CHATTER
+
+/* Define to 1 if you have the <assert.h> header file. */
+#undef HAVE_ASSERT_H
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#undef HAVE_MEMSET
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strrchr' function. */
+#undef HAVE_STRRCHR
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* define if debug build is disabled */
+#undef NDEBUG
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* define if we have llseek */
+#undef PHYSFS_HAVE_LLSEEK
+
+/* define if we have mntent.h */
+#undef PHYSFS_HAVE_MNTENT_H
+
+/* define if we have readline */
+#undef PHYSFS_HAVE_READLINE
+
+/* define if we have sys/ucred.h */
+#undef PHYSFS_HAVE_SYS_UCRED_H
+
+/* define desired natural language */
+#undef PHYSFS_LANG
+
+/* define if we have no CD support */
+#undef PHYSFS_NO_CDROM_SUPPORT
+
+/* define if we have no POSIX threads support */
+#undef PHYSFS_NO_PTHREADS_SUPPORT
+
+/* define to profile sorting, etc algorithms */
+#undef PHYSFS_PROFILING
+
+/* define if grp support is enabled */
+#undef PHYSFS_SUPPORTS_GRP
+
+/* define if hog support is enabled */
+#undef PHYSFS_SUPPORTS_HOG
+
+/* define if mvl support is enabled */
+#undef PHYSFS_SUPPORTS_MVL
+
+/* define if qpak support is enabled */
+#undef PHYSFS_SUPPORTS_QPAK
+
+/* define if zip support is enabled */
+#undef PHYSFS_SUPPORTS_ZIP
+
+/* The size of `int', as computed by sizeof. */
+#undef SIZEOF_INT
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Version number of package */
+#undef VERSION
