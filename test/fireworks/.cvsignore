@@ -1,0 +1,11 @@
+Makefile
+*.la
+*.lo
+.deps
+.libs
+Makefile.in
+libtool
+stamp-h1
+config.h
+config.status
+fireworks
