@@ -8,3 +8,4 @@ libtool
 stamp-h1
 config.h
 config.status
+autom4te.cache

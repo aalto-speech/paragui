@@ -4,3 +4,4 @@ paragui.pc
 Makefile
 libtool
 config.status
+autom4te.cache
