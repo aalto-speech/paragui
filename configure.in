@@ -10,7 +10,7 @@ dnl The minimum SDL version required
 SDL_VERSION=1.2.7
 
 dnl we also need libSigC++ (yeah)
-SIGC_VERSION=1.2.5
+SIGC_VERSION=1.2
 
 dnl Set various version strings - taken gratefully from the GTk sources
 
