@@ -36,6 +36,7 @@
 #include "paragui.h"
 #include "pgscrollwidget.h"
 #include <map>
+#include <vector>
 
 /**
 	@author Jaroslav Vozab
