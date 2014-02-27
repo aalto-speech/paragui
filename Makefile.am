@@ -1,6 +1,6 @@
 DISTCHECK_CONFIGURE_FLAGS=--enable-internalexpat --enable-internalphysfs
 
-SUBDIRS = include src data bindings test doc
+SUBDIRS = include src data bindings doc
 
 DIST_SUBDIRS = $(SUBDIRS) sdk debian
 
